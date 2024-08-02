@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -10,8 +10,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function SignUp() {
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
   return (
     <div
       style={{
@@ -19,7 +22,6 @@ function SignUp() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        background: "rgb(237 245 237 / 47%)",
       }}
     >
       <Card
@@ -47,18 +49,20 @@ function SignUp() {
                   textDecoration: "underline",
                   marginLeft: "4px",
                   cursor: "pointer",
+                  color: "green",
                 }}
+                onClick={() => navigate("/login")}
               >
                 Log in
               </span>
             </Typography>
           </Box>
-          <div style={{ margin: "24px 0" }}>
+          <div style={{ marginTop: "24px" }}>
             <Grid container spacing={3}>
               <Grid item xs={6}>
                 <TextField
                   type="text"
-                  label="First Name"
+                  placeholder="First Name"
                   variant="outlined"
                   fullWidth
                 />
@@ -66,7 +70,7 @@ function SignUp() {
               <Grid item xs={6}>
                 <TextField
                   type="text"
-                  label="Last Name"
+                  placeholder="Last Name"
                   variant="outlined"
                   fullWidth
                 />
@@ -74,50 +78,45 @@ function SignUp() {
               <Grid item xs={12}>
                 <TextField
                   type="email"
-                  label="Email"
+                  placeholder="Email"
                   variant="outlined"
                   fullWidth
                 />
               </Grid>
               <Grid item xs={12}>
+                <Typography
+                  variant="body2"
+                  align="left"
+                  style={{ color: "grey", marginBottom: "4px" }}
+                >
+                  Use 8 or more characters with a mix of letters, numbers &
+                  symbols
+                </Typography>
                 <TextField
-                  type="password"
-                  label="Password"
+                  type={showPassword ? "text" : "Password"}
+                  placeholder="Password"
                   variant="outlined"
                   fullWidth
                 />
               </Grid>
             </Grid>
           </div>
-          <Grid container style={{ marginTop: "8px", color: "grey" }}>
-            <Grid item xs={12}>
-              <Typography variant="body2" align="left">
-                Use 8 or more characters with a mix of letters, numbers &
-                symbols
-              </Typography>
-            </Grid>
-          </Grid>
           <FormGroup>
             <FormControlLabel
-              control={<Checkbox color="success" />}
+              style={{ color: "grey" }}
+              control={
+                <Checkbox
+                  color="success"
+                  checked={showPassword}
+                  onChange={() => setShowPassword(!showPassword)}
+                />
+              }
               label="Show password"
             />
           </FormGroup>
           <Grid container alignItems="end" justifyContent="space-between">
-            <Grid item xs={6}>
-              <Typography
-                align="left"
-                style={{
-                  textDecoration: "underline",
-                  color: "grey",
-                  cursor: "pointer",
-                }}
-              >
-                Log in instead
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Button variant="contained" color="success">
+            <Grid item xs={12}>
+              <Button variant="contained" fullWidth color="success">
                 Create an account
               </Button>
             </Grid>

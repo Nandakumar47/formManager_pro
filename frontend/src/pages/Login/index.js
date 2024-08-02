@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -10,7 +10,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+
 function Login(p) {
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
   return (
     <div
       style={{
@@ -18,7 +22,6 @@ function Login(p) {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        background: "rgb(237 245 237 / 47%)",
       }}
     >
       <Card
@@ -39,25 +42,45 @@ function Login(p) {
             <Grid item xs={12}>
               <TextField
                 type="email"
-                label="Email"
+                placeholder="Email"
                 variant="outlined"
                 fullWidth
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                type="password"
-                label="Password"
+                type={showPassword ? "text" : "Password"}
+                placeholder="Password"
                 variant="outlined"
                 fullWidth
               />
             </Grid>
           </Grid>
+          <Box style={{ color: "grey", marginTop: "8px" }} textAlign="left">
+            Don't have an account?{" "}
+            <span
+              style={{
+                color: "green",
+                cursor: "pointer",
+                textDecoration: "underline",
+              }}
+              onClick={() => navigate("/signup")}
+            >
+              Sign Up
+            </span>
+          </Box>
         </Box>
 
         <FormGroup>
           <FormControlLabel
-            control={<Checkbox color="success" />}
+            style={{ color: "grey" }}
+            control={
+              <Checkbox
+                color="success"
+                checked={showPassword}
+                onChange={() => setShowPassword(!showPassword)}
+              />
+            }
             label="Show password"
           />
         </FormGroup>
