@@ -11,10 +11,35 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import authService from "../../services/authServices";
 
 function SignUp() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState({
+    fName: "",
+    lName: "",
+  });
+  const handleCreateAccount = async () => {
+    try {
+      const signUpDetails = {
+        name: `${fullName.fName} ${fullName.lName}`,
+        email,
+        password,
+      };
+
+      const isSignUpSucceed = await authService.signup(signUpDetails);
+      if (isSignUpSucceed) {
+        alert("Successfully created account");
+      } else {
+        alert("Something went wrong while creating your account");
+      }
+    } catch (err) {
+      alert("Something went wrong while creating your account");
+    }
+  };
   return (
     <div
       style={{
@@ -65,6 +90,13 @@ function SignUp() {
                   placeholder="First Name"
                   variant="outlined"
                   fullWidth
+                  value={fullName.fName}
+                  onChange={(evt) => {
+                    setFullName((prev) => ({
+                      ...prev,
+                      fName: evt.target.value,
+                    }));
+                  }}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -73,6 +105,13 @@ function SignUp() {
                   placeholder="Last Name"
                   variant="outlined"
                   fullWidth
+                  value={fullName.lName}
+                  onChange={(evt) => {
+                    setFullName((prev) => ({
+                      ...prev,
+                      lName: evt.target.value,
+                    }));
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -81,6 +120,10 @@ function SignUp() {
                   placeholder="Email"
                   variant="outlined"
                   fullWidth
+                  value={email}
+                  onChange={(evt) => {
+                    setEmail(evt.target.value);
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -97,6 +140,10 @@ function SignUp() {
                   placeholder="Password"
                   variant="outlined"
                   fullWidth
+                  value={password}
+                  onChange={(evt) => {
+                    setPassword(evt.target.value);
+                  }}
                 />
               </Grid>
             </Grid>
@@ -116,7 +163,12 @@ function SignUp() {
           </FormGroup>
           <Grid container alignItems="end" justifyContent="space-between">
             <Grid item xs={12}>
-              <Button variant="contained" fullWidth color="success">
+              <Button
+                variant="contained"
+                fullWidth
+                color="success"
+                onClick={handleCreateAccount}
+              >
                 Create an account
               </Button>
             </Grid>

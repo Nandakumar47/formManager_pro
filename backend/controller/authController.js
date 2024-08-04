@@ -23,9 +23,13 @@ const login = async (req, res) => {
 };
 const signUp = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, name } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ email, password: hashedPassword });
+    const newUser = new User({
+      name,
+      email,
+      password: hashedPassword,
+    });
     await newUser.save();
     const token = jwt.sign({ userId: newUser._id }, "this is my secret key", {
       expiresIn: "1h",
@@ -35,7 +39,7 @@ const signUp = async (req, res) => {
       .json({ success: true, message: "User Created Successfully", token });
   } catch (error) {
     return res.json({
-      success: true,
+      success: false,
       message: "Failed :" + error,
     });
   }

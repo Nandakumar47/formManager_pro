@@ -11,10 +11,30 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import authService from "../../services/authServices";
 
 function Login(p) {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleLogIn = async () => {
+    try {
+      const loginDetails = {
+        email,
+        password,
+      };
+      const isLoginSucceed = await authService.login(loginDetails);
+      debugger;
+      if (isLoginSucceed) {
+        navigate("/");
+      } else {
+        alert("Something went wrong while logging in to your account");
+      }
+    } catch (err) {
+      alert("Something went wrong while logging in to your account");
+    }
+  };
   return (
     <div
       style={{
@@ -45,6 +65,10 @@ function Login(p) {
                 placeholder="Email"
                 variant="outlined"
                 fullWidth
+                onChange={(evt) => {
+                  setEmail(evt.target.value);
+                }}
+                value={email}
               />
             </Grid>
             <Grid item xs={12}>
@@ -52,6 +76,10 @@ function Login(p) {
                 type={showPassword ? "text" : "Password"}
                 placeholder="Password"
                 variant="outlined"
+                value={password}
+                onChange={(evt) => {
+                  setPassword(evt.target.value);
+                }}
                 fullWidth
               />
             </Grid>
@@ -86,14 +114,16 @@ function Login(p) {
         </FormGroup>
         <Grid container alignItems="center" justifyContent="end">
           <Grid item xs={12}>
-            <Button variant="contained" color="success" fullWidth>
+            <Button
+              variant="contained"
+              color="success"
+              fullWidth
+              onClick={handleLogIn}
+            >
               Login
             </Button>
           </Grid>
         </Grid>
-        {/* <Box width={400}>
-          <h1>dfsd</h1>
-        </Box> */}
       </Card>
     </div>
   );
