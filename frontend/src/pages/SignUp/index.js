@@ -33,6 +33,7 @@ function SignUp() {
       const isSignUpSucceed = await authService.signup(signUpDetails);
       if (isSignUpSucceed) {
         alert("Successfully created account");
+        navigate("/home");
       } else {
         alert("Something went wrong while creating your account");
       }

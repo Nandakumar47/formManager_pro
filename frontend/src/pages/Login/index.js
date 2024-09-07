@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -18,6 +18,12 @@ function Login(p) {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  useEffect(() => {
+    const isAuthenticated = !!sessionStorage.getItem("accessToken");
+    if (isAuthenticated) {
+      navigate("/home");
+    }
+  }, []);
   const handleLogIn = async () => {
     try {
       const loginDetails = {
@@ -25,9 +31,8 @@ function Login(p) {
         password,
       };
       const isLoginSucceed = await authService.login(loginDetails);
-      debugger;
       if (isLoginSucceed) {
-        navigate("/");
+        navigate("/home");
       } else {
         alert("Something went wrong while logging in to your account");
       }
@@ -35,6 +40,7 @@ function Login(p) {
       alert("Something went wrong while logging in to your account");
     }
   };
+
   return (
     <div
       style={{

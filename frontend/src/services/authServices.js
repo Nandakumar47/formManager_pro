@@ -1,13 +1,17 @@
-import axios from "axios";
+import axiosInstance from "./axiosInstance";
 const authService = {
   login: async (loginDetails) => {
     try {
       const { email, password } = loginDetails;
-      const response = await axios.post("http://localhost:6001/api/login", {
-        email,
-        password,
-      });
+      const response = await axiosInstance.post(
+        "http://localhost:6001/auth/login",
+        {
+          email,
+          password,
+        }
+      );
       if (response.data.success) {
+        sessionStorage.setItem("accessToken", response.data.accessToken);
         return true;
       } else {
         return false;
@@ -21,12 +25,31 @@ const authService = {
       const { email, password, name } = signUpDetails;
       debugger;
 
-      const response = await axios.post("http://localhost:6001/api/signup", {
-        email,
-        password,
-        name,
-      });
+      const response = await axiosInstance.post(
+        "http://localhost:6001/auth/signup",
+        {
+          email,
+          password,
+          name,
+        }
+      );
       if (response.data.success) {
+        sessionStorage.setItem("accessToken", response.data.accessToken);
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      return false;
+    }
+  },
+  logout: async () => {
+    try {
+      const response = await axiosInstance.post(
+        "http://localhost:6001/auth/logout"
+      );
+      if (response.data.success) {
+        sessionStorage.removeItem("accessToken");
         return true;
       } else {
         return false;
