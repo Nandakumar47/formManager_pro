@@ -19,28 +19,33 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
+    debugger;
     const originalRequest = error.config;
-    if (error?.response?.status === 401 && !originalRequest?._retry) {
+    if (error?.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      debugger;
-      try {
-        // Attempt to refresh the access token
-        const response = await axios.post(
-          "auth/token/refresh",
-          {},
-          { withCredentials: true }
-        );
-        debugger;
-        const newAccessToken = response?.data?.accessToken;
-
-        // Store the new access token
-        sessionStorage.setItem("accessToken", newAccessToken);
-        // Retry the original request
-        originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
-        return axiosInstance(originalRequest);
-      } catch (refreshError) {
-        console.error("Refresh token expired or invalid", refreshError);
-        // Redirect to login page
+      if (error?.response?.data?.code === "tokenExpiry") {
+        try {
+          const refreshResponse = await axios.post(
+            "http://localhost:6001/auth/token/refresh",
+            {},
+            { withCredentials: true }
+          );
+          const newAccessToken = refreshResponse?.data?.accessToken;
+          debugger;
+          if (newAccessToken) {
+            sessionStorage.setItem("accessToken", newAccessToken);
+            originalRequest.headers[
+              "Authorization"
+            ] = `Bearer ${newAccessToken}`;
+            return axiosInstance(originalRequest);
+          }
+        } catch (refreshError) {
+          debugger;
+          console.error("Refresh token expired or invalid", refreshError);
+          window.location.href = "/login";
+          return Promise.reject(refreshError);
+        }
+      } else {
         window.location.href = "/login";
       }
     }

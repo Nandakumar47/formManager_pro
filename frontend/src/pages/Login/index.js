@@ -59,7 +59,11 @@ function Login(p) {
         }}
       >
         <Box>
-          <Typography variant="h4" align="left">
+          <Typography
+            variant="h4"
+            align="left"
+            sx={{ fontWeight: 600, fontSize: "1.5rem" }}
+          >
             Login
           </Typography>
         </Box>

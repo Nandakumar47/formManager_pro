@@ -13,7 +13,20 @@ const authMiddleWare = (req, res, next) => {
     req.user = verified;
     next();
   } catch (error) {
-    return res.status(400).json({ message: "Invalid Token" });
+    if (error instanceof jwt.TokenExpiredError) {
+      // Handle expired token case
+      return res
+        .status(401)
+        .json({ code: "tokenExpiry", message: "Token expired" });
+    } else if (error instanceof jwt.JsonWebTokenError) {
+      // Handle invalid token case
+      return res
+        .status(401)
+        .json({ code: "invalidToken", message: "Invalid token" });
+    } else {
+      // Handle other errors
+      return res.status(401).json({ message: "Access denied" });
+    }
   }
 };
 module.exports = authMiddleWare;

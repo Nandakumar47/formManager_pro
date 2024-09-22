@@ -107,8 +107,10 @@ const refreshAccessToken = (req, res) => {
       sameSite: "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    res.json({ accessToken: accessToken });
-  } catch (error) {}
+    return res.json({ accessToken: accessToken, success: true });
+  } catch (error) {
+    return res.json({ success: false });
+  }
 };
 const logout = (req, res) => {
   try {
