@@ -23,10 +23,10 @@ export const useAuthValueContext = () => {
 export const AuthContextProvider = ({ children }) => {
   const [value, dispatch] = useReducer(authReducer, authInitialState);
   return (
-    <AuthDispatchContext.Provider value={dispatch}>
-      <AuthValueContext.Provider value={value}>
+    <AuthValueContext.Provider value={value}>
+      <AuthDispatchContext.Provider value={dispatch}>
         {children}
-      </AuthValueContext.Provider>
-    </AuthDispatchContext.Provider>
+      </AuthDispatchContext.Provider>
+    </AuthValueContext.Provider>
   );
 };

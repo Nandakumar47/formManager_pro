@@ -30,7 +30,7 @@ export const doLogout = async (dispatch) => {
 };
 export const isUserAuthenticated = async (dispatch) => {
   try {
-    const response = await axios.get("/me");
+    const response = await axios.get("/auth/me");
     if (response?.data?.success) {
       dispatch({
         type: "LOGIN_SUCCESS",

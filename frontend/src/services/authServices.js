@@ -3,23 +3,23 @@ const authService = {
   login: async (loginDetails) => {
     try {
       const { email, password } = loginDetails;
-      const response = await axios.post("http://localhost:6001/auth/login", {
+      const response = await axios.post("/auth/login", {
         email,
         password,
       });
       if (response?.data?.success) {
-        return true;
+        return { loginDetails, success: true };
       } else {
-        return false;
+        return { success: false };
       }
     } catch (error) {
-      return false;
+      return { success: false };
     }
   },
   signup: async (signUpDetails) => {
     try {
       const { email, password, name } = signUpDetails;
-      const response = await axios.post("http://localhost:6001/auth/signup", {
+      const response = await axios.post("/auth/signup", {
         email,
         password,
         name,
@@ -35,7 +35,7 @@ const authService = {
   },
   logout: async () => {
     try {
-      const response = await axios.post("http://localhost:6001/auth/logout");
+      const response = await axios.post("/auth/logout");
       if (response.data.success) {
         return true;
       } else {

@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const excludeRoutes = ["/login", "/signUp"];
+const excludeRoutes = ["/auth/login", "/auth/signUp"];
 const authMiddleWare = (req, res, next) => {
   try {
     if (excludeRoutes?.includes(req.path)) {
@@ -7,7 +7,7 @@ const authMiddleWare = (req, res, next) => {
       return;
     }
     const authHeader = req.headers["authorization"];
-    if (!authHeader) {
+    if (!authHeader && !req?.cookies?.accessToken) {
       return res.status(401).json({ message: "Access denied" });
     }
     const token =

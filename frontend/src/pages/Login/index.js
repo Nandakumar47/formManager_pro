@@ -12,20 +12,22 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import authService from "../../services/authServices";
+import { doLogin } from "../../contexts/authContext/authActions";
+import { useAuthDispatchContext } from "../../contexts/authContext";
 
 function Login(p) {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const authDispatchContext = useAuthDispatchContext();
   const handleLogIn = async () => {
     try {
       const loginDetails = {
         email,
         password,
       };
-      const isLoginSucceed = await authService.login(loginDetails);
+      const isLoginSucceed = await doLogin(authDispatchContext, loginDetails);
       if (isLoginSucceed) {
         navigate("/home");
       } else {

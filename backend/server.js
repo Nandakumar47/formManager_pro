@@ -39,5 +39,5 @@ app.get("/", (req, res) => {
 // Connect to the database
 connectDB();
 app.listen(PORT, () => {
-  console.log("listening");
+  console.log(`listening to port : ${PORT}`);
 });
