@@ -17,6 +17,22 @@ export const doLogin = async (dispatch, loginDetails) => {
     return false;
   }
 };
+export const doSignUp = async (dispatch, signUpDetails) => {
+  try {
+    const signedUpUserDetails = await authService.signup(signUpDetails);
+    if (signedUpUserDetails?.success) {
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: { signedUpUserDetails },
+      });
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
+};
 export const doLogout = async (dispatch) => {
   dispatch({
     type: "LOGOUT",

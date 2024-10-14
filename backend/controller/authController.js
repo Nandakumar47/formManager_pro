@@ -47,7 +47,7 @@ const signUp = async (req, res) => {
     });
     await newUser.save();
     const accessToken = jwt.sign(
-      { userId: newUser._id },
+      { userId: newUser._id, email },
       "this is my secret key for access token",
       {
         expiresIn: "8h",

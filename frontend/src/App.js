@@ -26,7 +26,7 @@ function App() {
     defineAxiosResponseInterceptor();
     handleRedirection();
   }, []);
-
+  console.log({ authUserDetails });
   const handleRedirection = async () => {
     const isAuth = await isUserAuthenticated(authDispatch);
     setIsAuthChecking(false);
@@ -43,7 +43,7 @@ function App() {
   const defineAxiosRequestInterceptor = () => {
     axios.interceptors.request.use(
       (config) => {
-        config.baseURL = "http://localhost:600";
+        config.baseURL = "http://localhost:6001";
         config.withCredentials = true;
         return config;
       },
@@ -60,7 +60,6 @@ function App() {
           error?.response?.status === 401 ||
           error?.response?.status === 403
         ) {
-          alert("Your session expired");
           navigate("/login");
         }
         return Promise.reject(error);

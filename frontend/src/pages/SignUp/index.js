@@ -12,6 +12,8 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import authService from "../../services/authServices";
+import { useAuthDispatchContext } from "../../contexts/authContext";
+import { doSignUp } from "../../contexts/authContext/authActions";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -22,6 +24,7 @@ function SignUp() {
     fName: "",
     lName: "",
   });
+  const authDispatch = useAuthDispatchContext();
   const handleCreateAccount = async () => {
     try {
       const signUpDetails = {
@@ -30,15 +33,15 @@ function SignUp() {
         password,
       };
 
-      const isSignUpSucceed = await authService.signup(signUpDetails);
+      const isSignUpSucceed = await doSignUp(authDispatch, signUpDetails);
       if (isSignUpSucceed) {
-        alert("Successfully created account");
+        // alert("Successfully created account");
         navigate("/home");
       } else {
-        alert("Something went wrong while creating your account");
+        // alert("Something went wrong while creating your account");
       }
     } catch (err) {
-      alert("Something went wrong while creating your account");
+      // alert("Something went wrong while creating your account");
     }
   };
   return (

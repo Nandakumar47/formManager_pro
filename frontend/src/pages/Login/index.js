@@ -31,10 +31,10 @@ function Login(p) {
       if (isLoginSucceed) {
         navigate("/home");
       } else {
-        alert("Something went wrong while logging in to your account");
+        // alert("Something went wrong while logging in to your account");
       }
     } catch (err) {
-      alert("Something went wrong while logging in to your account");
+      // alert("Something went wrong while logging in to your account");
     }
   };
 

@@ -8,9 +8,7 @@ import { doLogout } from "../contexts/authContext/authActions";
 import { useAuthDispatchContext } from "../contexts/authContext";
 
 // Styled components
-const CustomAppBar = styled(AppBar)(({ theme }) => ({
-  backgroundColor: theme.palette.success.main,
-}));
+const CustomAppBar = styled(AppBar)(({ theme }) => ({}));
 
 const Title = styled(Typography)({
   flexGrow: 1,
@@ -27,14 +25,13 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       const isLogoutSuccess = await doLogout(authDispatch);
-      debugger;
       if (isLogoutSuccess) {
         navigate("/login");
       } else {
-        alert("failed to log out");
+        // alert("failed to log out");
       }
     } catch (error) {
-      alert("failed to log out");
+      // alert("failed to log out");
     }
   };
   const handleTest = async () => {

@@ -11,7 +11,7 @@ const authMiddleWare = (req, res, next) => {
       return res.status(401).json({ message: "Access denied" });
     }
     const token =
-      authHeader.replace("Bearer ", "") || req?.cookies?.accessToken;
+      authHeader?.replace("Bearer ", "") || req?.cookies?.accessToken;
     const verified = jwt.verify(
       token,
       "this is my secret key for access token"
