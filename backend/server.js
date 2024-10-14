@@ -5,6 +5,7 @@ const app = express();
 const authRoutes = require("./routes/authRoutes");
 const formRoutes = require("./routes/formRoutes");
 const cookieParser = require("cookie-parser");
+const authMiddleWare = require("./middlewares/authMiddleWares");
 
 const PORT = process.env.PORT || 6001;
 app.use(
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 const MONGO_URI = "mongodb://0.0.0.0:27017/formManager";
+app.use(authMiddleWare);
 app.use("/api", formRoutes);
 app.use("/auth", authRoutes);
 // Function to connect to MongoDB

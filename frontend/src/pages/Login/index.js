@@ -18,12 +18,7 @@ function Login(p) {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  useEffect(() => {
-    const isAuthenticated = !!sessionStorage.getItem("accessToken");
-    if (isAuthenticated) {
-      navigate("/home");
-    }
-  }, []);
+
   const handleLogIn = async () => {
     try {
       const loginDetails = {

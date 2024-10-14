@@ -14,21 +14,15 @@ const login = async (req, res) => {
         { userId: user._id },
         "this is my secret key for access token",
         {
-          expiresIn: "1h",
+          expiresIn: "8h",
         }
       );
-      const refreshToken = jwt.sign(
-        { userId: user._id },
-        "this is my secret key for refresh token",
-        {
-          expiresIn: "12d",
-        }
-      );
-      res.cookie("refreshToken", refreshToken, {
+
+      res.cookie("accessToken", accessToken, {
         httpOnly: true,
         secure: true,
         sameSite: "strict",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
+        maxAge: 8 * 60 * 60 * 1000,
       });
       res.json({
         success: true,
@@ -56,21 +50,15 @@ const signUp = async (req, res) => {
       { userId: newUser._id },
       "this is my secret key for access token",
       {
-        expiresIn: "15m",
+        expiresIn: "8h",
       }
     );
-    const refreshToken = jwt.sign(
-      { userId: newUser._id },
-      "this is my secret key for refresh token",
-      {
-        expiresIn: "12d",
-      }
-    );
-    res.cookie("refreshToken", refreshToken, {
+
+    res.cookie("accessToken", accessToken, {
       httpOnly: true,
       secure: true,
       sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      maxAge: 8 * 60 * 60 * 1000,
     });
     return res.status(201).json({
       success: true,
@@ -114,7 +102,7 @@ const refreshAccessToken = (req, res) => {
 };
 const logout = (req, res) => {
   try {
-    res.cookie("refreshToken", "", {
+    res.cookie("accessToken", "", {
       httpOnly: true,
       secure: true,
       sameSite: "strict",
@@ -131,4 +119,25 @@ const logout = (req, res) => {
     });
   }
 };
-module.exports = { login, signUp, refreshAccessToken, logout };
+const me = async (req, res) => {
+  try {
+    const accessToken = req?.cookies?.accessToken;
+    const userDetails = req.user;
+    const userInDB = await User.findOne({ email: userDetails?.email });
+    if (userInDB) {
+      return res.json({
+        success: true,
+        userDetails: userInDB,
+      });
+    } else {
+      return res.json({
+        success: false,
+      });
+    }
+  } catch (error) {
+    return res.json({
+      success: false,
+    });
+  }
+};
+module.exports = { login, signUp, refreshAccessToken, logout, me };

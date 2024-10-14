@@ -5,10 +5,12 @@ const {
   signUp,
   refreshAccessToken,
   logout,
+  me,
 } = require("../controller/authController");
 const validateRefreshToken = require("../middlewares/validateRefreshToken");
 router.post("/login", login);
 router.post("/signUp", signUp);
 router.post("/logout", logout);
+router.get("/me", me);
 router.post("/token/refresh", validateRefreshToken, refreshAccessToken);
 module.exports = router;

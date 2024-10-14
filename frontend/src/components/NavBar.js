@@ -3,7 +3,9 @@ import { AppBar, Toolbar, Typography, Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../services/authServices";
-import axiosInstance from "../services/axiosInstance";
+import axios from "axios";
+import { doLogout } from "../contexts/authContext/authActions";
+import { useAuthDispatchContext } from "../contexts/authContext";
 
 // Styled components
 const CustomAppBar = styled(AppBar)(({ theme }) => ({
@@ -21,9 +23,11 @@ const NavButton = styled(Button)(({ theme }) => ({
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const authDispatch = useAuthDispatchContext();
   const handleLogout = async () => {
     try {
-      const isLogoutSuccess = await authService.logout();
+      const isLogoutSuccess = await doLogout(authDispatch);
+      debugger;
       if (isLogoutSuccess) {
         navigate("/login");
       } else {
@@ -35,7 +39,7 @@ const Navbar = () => {
   };
   const handleTest = async () => {
     try {
-      const response = await axiosInstance.get("api/test");
+      const response = await axios.get("api/test");
     } catch (error) {}
   };
   return (
