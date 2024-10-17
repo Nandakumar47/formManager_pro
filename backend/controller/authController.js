@@ -123,7 +123,7 @@ const me = async (req, res) => {
   try {
     const accessToken = req?.cookies?.accessToken;
     const userDetails = req.user;
-    const userInDB = await User.findOne({ email: userDetails?.email });
+    const userInDB = await User.findOne({ _id: userDetails?.userId });
     if (userInDB) {
       return res.json({
         success: true,
