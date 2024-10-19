@@ -11,9 +11,9 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import authService from "../../services/authServices";
 import { useAuthDispatchContext } from "../../contexts/authContext";
 import { doSignUp } from "../../contexts/authContext/authActions";
+import { useCommonContext } from "../../contexts/CommonContext/CommonContext";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -25,6 +25,8 @@ function SignUp() {
     lName: "",
   });
   const authDispatch = useAuthDispatchContext();
+  const { showAppNotification, toggleLoader } = useCommonContext();
+
   const handleCreateAccount = async () => {
     try {
       const signUpDetails = {
@@ -32,16 +34,23 @@ function SignUp() {
         email,
         password,
       };
-
+      toggleLoader(true);
       const isSignUpSucceed = await doSignUp(authDispatch, signUpDetails);
+      toggleLoader(false);
       if (isSignUpSucceed) {
-        // alert("Successfully created account");
+        showAppNotification("Successfully created account", "success");
         navigate("/home");
       } else {
-        // alert("Something went wrong while creating your account");
+        showAppNotification(
+          "Something went wrong while creating your account",
+          "failure"
+        );
       }
     } catch (err) {
-      // alert("Something went wrong while creating your account");
+      showAppNotification(
+        "Something went wrong while creating your account",
+        "failure"
+      );
     }
   };
   return (

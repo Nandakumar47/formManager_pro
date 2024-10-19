@@ -15,22 +15,27 @@ import {
   useAuthValueContext,
 } from "./contexts/authContext";
 import { isUserAuthenticated } from "./contexts/authContext/authActions";
+import UseCommon from "./contexts/CommonContext/WithCommons";
+import { useCommonContext } from "./contexts/CommonContext/CommonContext";
 
 function App() {
   const navigate = useNavigate();
   const [isAuthChecking, setIsAuthChecking] = useState(true);
   const authDispatch = useAuthDispatchContext();
   const authUserDetails = useAuthValueContext();
+  const { showAppNotification, toggleLoader } = useCommonContext();
   useEffect(() => {
     defineAxiosRequestInterceptor();
     defineAxiosResponseInterceptor();
     handleRedirection();
   }, []);
-  console.log({ authUserDetails });
   const handleRedirection = async () => {
+    toggleLoader(true);
     const isAuth = await isUserAuthenticated(authDispatch);
+    toggleLoader(false);
     setIsAuthChecking(false);
     if (isAuth) {
+      showAppNotification("login succeeded", "success");
       navigate("/home");
     } else {
       navigate("/login");
@@ -93,4 +98,4 @@ function App() {
   );
 }
 
-export default App;
+export default UseCommon(App);

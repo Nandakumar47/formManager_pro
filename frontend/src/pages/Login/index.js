@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import authService from "../../services/authServices";
 import { doLogin } from "../../contexts/authContext/authActions";
 import { useAuthDispatchContext } from "../../contexts/authContext";
+import { useCommonContext } from "../../contexts/CommonContext/CommonContext";
 
 function Login(p) {
   const navigate = useNavigate();
@@ -21,20 +22,28 @@ function Login(p) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const authDispatchContext = useAuthDispatchContext();
+  const { showAppNotification, toggleLoader } = useCommonContext();
+
   const handleLogIn = async () => {
     try {
       const loginDetails = {
         email,
         password,
       };
+      toggleLoader(true);
       const isLoginSucceed = await doLogin(authDispatchContext, loginDetails);
+      toggleLoader(false);
       if (isLoginSucceed) {
         navigate("/home");
       } else {
-        // alert("Something went wrong while logging in to your account");
+        showAppNotification(
+          "Something went wrong while logging in to your account"
+        );
       }
     } catch (err) {
-      // alert("Something went wrong while logging in to your account");
+      showAppNotification(
+        "Something went wrong while logging in to your account"
+      );
     }
   };
 
