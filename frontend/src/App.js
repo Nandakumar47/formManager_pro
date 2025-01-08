@@ -35,7 +35,6 @@ function App() {
     toggleLoader(false);
     setIsAuthChecking(false);
     if (isAuth) {
-      showAppNotification("login succeeded", "success");
       navigate("/home");
     } else {
       navigate("/login");

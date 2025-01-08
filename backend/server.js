@@ -18,7 +18,6 @@ app.use(express.json());
 app.use(cookieParser());
 
 const MONGO_URI = "mongodb://0.0.0.0:27017/formManager";
-app.use(authMiddleWare);
 app.use("/api", formRoutes);
 app.use("/auth", authRoutes);
 // Function to connect to MongoDB
