@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const entrySchema = mongoose.Schema({
-  userId: { type: String, required: true, unique: true },
+  userId: { type: String, required: true },
   providedData: {
     name: { type: String, required: true },
     contact: { type: String, required: true },

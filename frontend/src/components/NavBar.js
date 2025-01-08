@@ -8,7 +8,6 @@ import { doLogout } from "../contexts/authContext/authActions";
 import { useAuthDispatchContext } from "../contexts/authContext";
 
 // Styled components
-const CustomAppBar = styled(AppBar)(({ theme }) => ({}));
 
 const Title = styled(Typography)({
   flexGrow: 1,
@@ -40,9 +39,11 @@ const Navbar = () => {
     } catch (error) {}
   };
   return (
-    <CustomAppBar position="static">
+    <AppBar position="static" sx={{ background: "#7860cc" }}>
       <Toolbar>
-        <Title variant="h6">MyApp</Title>
+        <Title variant="h6" sx={{ textAlign: "left", fontWeight: 600 }}>
+          Form Manager Pro
+        </Title>
         <NavButton color="inherit" component={Link} to="/home">
           Home
         </NavButton>
@@ -56,7 +57,7 @@ const Navbar = () => {
           Logout
         </NavButton>
       </Toolbar>
-    </CustomAppBar>
+    </AppBar>
   );
 };
 

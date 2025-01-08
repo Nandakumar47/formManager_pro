@@ -59,7 +59,7 @@ const handleStoreUserData = async (req, res) => {
       },
     };
     const newEntry = new Entries(dataToAdd);
-    await newEntry.save();
+    const result = await newEntry.save();
     return res.status(200).json({
       success: true,
       message: "Successfully added the data",
@@ -74,8 +74,18 @@ const handleStoreUserData = async (req, res) => {
 const getStoredData = async (req, res) => {
   try {
     const { userId } = req.user;
-    const userDetails = await Entries.findById(userId).exec();
-  } catch (error) {}
+    const userDetails = await Entries.find({ userId });
+    return res.status(200).json({
+      success: true,
+      message: "Successfully fetched",
+      userDetails,
+    });
+  } catch (error) {
+    return res.status(200).json({
+      success: false,
+      message: "Failed fetch the details",
+    });
+  }
 };
 module.exports = {
   testRoute,

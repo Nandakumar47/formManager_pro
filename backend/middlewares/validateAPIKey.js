@@ -14,7 +14,7 @@ const validateAPIKey = async (req, res, next) => {
     }
 
     // Attach user details to the request object
-    req.user = user;
+    req.user = { userId: user._id };
     next();
   } catch (error) {
     console.error("Authentication error:", error);

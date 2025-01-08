@@ -7,9 +7,10 @@ const {
   handleStoreUserData,
   getStoredData,
 } = require("../controller/FormController");
+const validateAPIKey = require("../middlewares/validateAPIKey");
 const router = express.Router();
 //Verify the API key using middleware
-router.post("/addFormData", handleStoreUserData);
+router.post("/addFormData", validateAPIKey, handleStoreUserData);
 //
 router.use(authMiddleWare);
 router.get("/test", testRoute);
