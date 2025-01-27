@@ -48,10 +48,10 @@ const Navbar = () => {
           Home
         </NavButton>
         <NavButton color="inherit" component={Link} to="/about">
-          About
+          Documentation
         </NavButton>
         <NavButton color="inherit" onClick={handleTest}>
-          Contact
+          About
         </NavButton>
         <NavButton color="inherit" onClick={handleLogout}>
           Logout

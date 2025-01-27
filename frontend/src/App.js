@@ -6,7 +6,6 @@ import SignUp from "./pages/SignUp";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme/theme";
-import About from "./pages/About";
 import AppContainer from "./components/AppContainer";
 import { Box } from "@mui/material";
 import axios from "axios";
@@ -17,6 +16,7 @@ import {
 import { isUserAuthenticated } from "./contexts/authContext/authActions";
 import UseCommon from "./contexts/CommonContext/WithCommons";
 import { useCommonContext } from "./contexts/CommonContext/CommonContext";
+import Documentation from "./pages/Documentation";
 
 function App() {
   const navigate = useNavigate();
@@ -81,7 +81,7 @@ function App() {
             <>
               <Route element={<AppContainer />}>
                 <Route path="/home" element={<Home />} />
-                <Route path="/about" element={<About />} />
+                <Route path="/about" element={<Documentation />} />
                 <Route path="*" element={<Navigate to="/home" replace />} />
               </Route>
             </>

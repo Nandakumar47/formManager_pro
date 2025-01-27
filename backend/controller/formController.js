@@ -78,7 +78,7 @@ const getStoredData = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Successfully fetched",
-      userDetails,
+      result: userDetails,
     });
   } catch (error) {
     return res.status(200).json({
