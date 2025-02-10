@@ -6,7 +6,7 @@ const {
   getGeneratedApiKey,
   handleStoreUserData,
   getStoredData,
-} = require("../controller/FormController");
+} = require("../controller/formController");
 const validateAPIKey = require("../middlewares/validateAPIKey");
 const router = express.Router();
 //Verify the API key using middleware

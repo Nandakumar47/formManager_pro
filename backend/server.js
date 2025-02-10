@@ -7,7 +7,7 @@ const formRoutes = require("./routes/formRoutes");
 const cookieParser = require("cookie-parser");
 const authMiddleWare = require("./middlewares/authMiddleWares");
 
-const PORT = process.env.PORT || 6001;
+const PORT = process.env.PORT || 6002;
 app.use(
   cors({
     origin: "http://localhost:3000", // The origin of your front-end application
