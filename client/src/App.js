@@ -47,7 +47,8 @@ function App() {
   const defineAxiosRequestInterceptor = () => {
     axios.interceptors.request.use(
       (config) => {
-        config.baseURL = "http://localhost:6002";
+        config.baseURL =
+          process.env.REACT_APP_BASE_URL || "http://localhost:6002";
         config.withCredentials = true;
         return config;
       },
