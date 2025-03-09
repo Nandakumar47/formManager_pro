@@ -30,16 +30,15 @@ async function connectDB() {
     process.exit(1);
   }
 }
+
+app.get("/", (req, res) => {
+  return res.json({ success: true });
+});
 app.use(express.static(path.join(__dirname, "../client/build")));
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build", "index.html"));
 });
-app.get("/", (req, res) => {
-  return res.json({ success: true });
-});
-// app.post("/api/signUp", signUp);
-// app.post("/api/login", login);
 // Connect to the database
 connectDB();
 app.listen(PORT, () => {
