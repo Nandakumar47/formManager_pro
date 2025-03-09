@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const excludeRoutes = ["/login", "/signUp"];
+const excludeRoutes = ["/login", "/signup"];
 const authMiddleWare = (req, res, next) => {
   try {
     if (excludeRoutes?.includes(req.path)) {
