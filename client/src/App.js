@@ -67,6 +67,9 @@ function App() {
           error?.response?.status === 401 ||
           error?.response?.status === 403
         ) {
+          authDispatch({
+            type: "LOGOUT",
+          });
           navigate("/login");
         }
         return Promise.reject(error);
