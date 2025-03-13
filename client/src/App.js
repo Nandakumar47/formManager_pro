@@ -48,7 +48,9 @@ function App() {
     axios.interceptors.request.use(
       (config) => {
         config.baseURL =
-          process.env.REACT_APP_BASE_URL || "http://localhost:6002";
+          process.env.APP_ENV === "dev"
+            ? "http://18.209.56.24:6002"
+            : "http://localhost:6002";
         config.withCredentials = true;
         return config;
       },
